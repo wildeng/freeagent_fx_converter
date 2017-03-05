@@ -1,0 +1,23 @@
+== README
+
+Before starting create the following environment variables:
+
+export DATABASE_USERNAME="whatever you want"
+export DATABASE_PASSWORD="whatever you want"
+export DEVELOPMENT_DATABASE="whatever you want"
+export PRODUCTION_DATABASE="whatever you want"
+export TEST_DATABASE="whatever you want"
+
+then run
+
+* rake db:create
+* rake db:migrate
+* rake db:seed
+
+to create production db:
+
+RAILS_ENV=production rake db:create
+
+to run the tests:
+
+* rake spec

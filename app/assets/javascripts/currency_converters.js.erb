@@ -1,0 +1,12 @@
+$( document ).ajaxSuccess(function( event, xhr, settings ) {
+  if ( settings.url == "/currency_converters/calculate_conversion" ) {
+    $( "#result" ).html( xhr.responseJSON.message );
+    $("#modal_result").modal("show");
+  }
+});
+$( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
+  if ( settings.url == "/currency_converters/calculate_conversion" ) {
+    $( "#result" ).html( jqxhr.responseJSON.message );
+    $("#modal_result").modal("show");
+  }
+});

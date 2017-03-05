@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-xs-12 col-ms-12 col-md-11 col-lg-11">
+    <%= form_tag currency_converters_calculate_conversion_path, id: 'conversion_rate', method: 'post', class: "form-horizontal", remote: true  do %>
+      <div class="form-group">
+          <%= label_tag :rate_view, I18n.t('label_date'), class: "col-xs-12 col-ms-12 col-md-1 col-lg-1" %>
+          <div class="col-xs-12 col-ms-12 col-md-11 col-lg-11">
+            <%= text_field_tag :rate_view %>
+            <%= hidden_field_tag :rate_date %>
+          </div>
+      </div>
+      <div class="form-group">
+          <%= label_tag :amount, I18n.t('label_amount'), class: "col-xs-12 col-ms-12 col-md-1 col-lg-1"  %>
+          <div class="col-xs-12 col-ms-12 col-md-2 col-lg-2">
+            <%= text_field_tag :amount, '' , size: 4 %>
+          </div>
+          <%= label_tag :from_cur, I18n.t('label_from'), class: "col-xs-12 col-ms-12 col-md-1 col-lg-1" %>
+          <div class="col-xs-12 col-ms-12 col-md-8 col-lg-8">
+            <%= select_tag :from_cur, options_from_collection_for_select(@currency_converters, :id, :currency_slug), prompt: I18n.t('from_ccy') %>
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="col-xs-12 col-ms-12 col-md-3 col-lg-3">&nbsp;</div>
+          <%= label_tag :to_cur, I18n.t('label_to'),class: "col-xs-12 col-ms-12 col-md-1 col-lg-1" %>
+          <div class="col-xs-12 col-ms-12 col-md-8 col-lg-8">
+            <%= select_tag :to_cur, options_from_collection_for_select(@currency_converters, :id, :currency_slug), prompt: I18n.t('to_ccy') %>
+          </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-12 col-ms-12 col-md-12 col-lg-12">
+          <%= submit_tag I18n.t('label_submit'), class: "btn btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div> <!-- end row -->
+<div class="modal" id="modal_result">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+          <div id="result"></div>
+      </div> <!-- end body -->
+  </div> <!-- end content -->
+</div><!-- end document -->
+</div>
+</div>
+<script>
+  $('#rate_view').datepicker({
+    dateFormat: "dd/mm/yy",
+    altFormat: "yy-mm-dd",
+    altField: "#rate_date"
+  });
+  /*
+  * this workaround it to correct a behaviour of jquery ui datepicker
+  * if a date is selected from the "history" of the widget the alt field
+  * was not updated
+  */
+  $('#rate_view').on("change", function(){
+    var widget = $.data(this, "datepicker");
+    $.datepicker._setDateFromField(widget);
+    $.datepicker._updateAlternate(widget);
+  });
+</script>
